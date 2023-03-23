@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="css/style.css?v=1.1">
+
+        <title>Laravel Vue Installation</title>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <section class="my-5 p-5">
+                        <h1>Como instalar y Configurar | Vue 3 Router | Laravel 9 | Vite</h1>
+
+                        <img src="img/laravel-vue.jpg" alt="" class="full-width">
+
+                        <h2>Configura Laravel 9 con Vue Router y vite en este articulo.</h2>
+
+                        <p>Aprende a instalar y configurar estos paquetes con las más recientes actualizaciones paso por paso.</p>
+
+                        <h2>Paso numero 1: Instalar un proyecto Laravel</h2>
+
+                        <p>Si no tenemos ya instalado un proyecto Laravel, creamos uno nuevo con el siguiente comando.</p>
+
+                        <pre>composer create-project laravel/laravel project-name</pre>
+
+                        <h2>Paso numero 2: Instalamos Vue, Router y todos los paquetes necesarios con npm</h2>
+
+                        <pre>npm install vue@next<br>npm install vue-loader@next<br>npm install @vitejs/plugin-vue<br>npm install vue-router --save<br>npm install vuetify@3.0.0-beta.10<br>npm install @mdi/font -D<br>npm install<br>npm run dev</pre>
+
+                        <h2>Paso numero 3: Configuramos el archivo vite.config.js</h2>
+
+                        <p>Necesitamos agregar algunas líneas de código en este archivo que se encuentra en el raiz de nuestro proyecto Laravel.</p>
+
+                        <pre>import vue from '@vitejs/plugin-vue';<br>vue(),</pre>
+
+                        <p>Quedaría de la siguiente manera:</p>
+
+                        <pre>import { defineConfig } from 'vite';<br>import laravel from 'laravel-vite-plugin';<br>import vue from '@vitejs/plugin-vue';<br><br>export default defineConfig({<br>   plugins: [<br>      vue(),<br>      laravel({<br>           input: ['resources/css/app.css', 'resources/js/app.js'],<br>            refresh: true,<br>      }),<br>   ],<br>});</pre>
+
+                        <h2>Paso numero 4: Creamos 4 carpetas en Resources/js/</h2>
+
+                        <p>
+                            - Componentes<br>
+                            - plugins<br>
+                            - router<br>
+                            - web
+                        </p>
+
+                        <h2>Paso numero 5: En componentes creamos el archivo Navbar.vue</h2>
+
+                        <p>Y añadimos el código de la barra de navegación y un sidenav.</p>
+
+                        <pre><span>&lt;template&gt;<br></span><span>&nbsp;&lt;div&gt;<br></span><span>&nbsp; &lt;v-card&gt;<br></span><span>&nbsp; &nbsp;&lt;v-layout&gt;<br></span><span>&nbsp; &nbsp; &lt;v-app-bar color="info"&gt;<br></span><span>&nbsp; &nbsp; &nbsp;&lt;v-app-bar-nav-icon<br></span><span>&nbsp; &nbsp; &nbsp;@click.stop="drawer = !drawer"&gt;<br></span><span>&nbsp; &nbsp; &lt;/v-app-bar-nav-icon&gt;<br></span><span>&nbsp; &nbsp;&lt;/v-app-bar&gt;<br></span><span>&nbsp; &nbsp;&lt;v-navigation-drawer v-model="drawer" &gt;<br></span><span>&nbsp; &nbsp; &lt;v-list &gt;<br></span><span>&nbsp; &nbsp; &nbsp;&lt;v-list-item v-for="item in items" :to="item.ruta"&gt;<br></span><span>&nbsp; &nbsp; &nbsp; {{item.nombre}}<br></span><span>&nbsp; &nbsp; &nbsp;&lt;/v-list-item&gt;<br></span><span>&nbsp; &nbsp; &lt;/v-list&gt;<br></span><span>&nbsp; &nbsp;&lt;/v-navigation-drawer&gt;<br></span><span>&nbsp; &lt;/v-layout&gt;<br></span><span>&nbsp;&lt;/v-card&gt;<br></span><span>&lt;/div&gt;<br></span><span>&lt;/template&gt;<br></span><span>&lt;script&gt;<br></span><span>&nbsp;export default {<br></span><span>&nbsp; data () {<br></span><span>&nbsp; &nbsp;return {<br></span><span>&nbsp; &nbsp; items: [<br></span><span>&nbsp; &nbsp; { nombre: 'Inicio' , icon: 'Foo', ruta:'/' },<br></span><span>&nbsp; &nbsp; { nombre: 'Contacto' , icon: 'Bar', ruta:'/contacto' }<br></span><span>&nbsp; &nbsp; ],<br></span><span>&nbsp; &nbsp; drawer: null,<br></span><span>&nbsp; &nbsp;}<br></span><span>&nbsp; },<br></span><span>&nbsp;}<br></span><span>&lt;/script&gt;</span></pre>
+
+                        <h2>Paso Numero 6: Creamos las rutas dentro del archivo router/index.js.</h2>
+
+                        <p>Creamos un archivo de nombre index.js dentro de router, con el que manejaremos as rutas del proyecto y añadimos el código.</p>
+
+                        <pre>import { createRouter, createWebHistory } from 'vue-router';<br><br>const HomeComponent = () => import ('../web/HomeCom.vue');<br>const ContactoComponent = () => import ('../web/ContactoCom.vue');<br><br>const routes=[<br>   { path:'/', name:'home', component:HomeComponent},<br>   { path:'/contacto', name:'contacto', component:ContactoComponent}<br>];<br><br>const router = createRouter({<br>   history: createWebHistory(import.meta.env.BASE_URL),<br>   routes<br>});<br><br>export default router;</pre>
+
+                        <h2>Paso numero 7: Creamos el archivo de entrada App.vue</h2>
+
+                        <p>Dentro de la carpeta web nos creamos un archivo de nombre App.vue el cual será el punto de entrada de nuestro proyecto, en el cual agregaremos el navbar y el router outlet para acceder a nuestras rutas, quedando de la siguiente manera:</p>
+
+                        <pre>&lt;template&gt;<br>&nbsp; &nbsp; &lt;div&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;Navbar&gt;&lt;/Navbar&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;router-view&gt;&lt;/router-view&gt;<br>&nbsp; &nbsp; &lt;/div&gt;<br>&lt;/template&gt;<br>&lt;style&gt;<br>   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&amp;display=swap');<br>   #app {<br>      font-family: 'Roboto', sans-serif;<br>      -webkit-font-smoothing: antialiased;<br>      -moz-osx-font-smoothing: grayscale;<br>      color: #2c3e50;<br>   }<br>   .portada{<br>      margin-top: 70px;<br>   }<br>&lt;/style&gt;</pre>
+
+                        <h2>Paso numero 8: Creamos la vista contacto.</h2>
+
+                        <p>Creamos un archivo de nombre ContactoCom.vue dentro de la carpeta web el cual tendrá la siguiente información.</p>
+
+                        <pre>&lt;template&gt;<br>   &lt;div class="portada"&gt;<br>      &lt;span&gt;<br>         Este es el Contacto<br>      &lt;/span&gt;<br>   &lt;/div&gt;<br>&lt;/template&gt;</pre>
+
+                        <h2>Paso numero 9: Creamos el archivo HomeCom.vue dentro de web.</h2>
+
+                        <p>Este es el home el cual tendrá la información de la página principal:</p>
+
+                        <pre>&lt;template&gt;<br>   &lt;div class="portada"&gt;<br>      Este es el home<br>   &lt;/div&gt;<br>&lt;/template&gt;</pre>
+
+                        <h2>Paso numero 10: Configurar nuestro archivo principal app.js</h2>
+
+                        <p>Este archivo es muy importante para nuestro proyecto el cual tendrá la información necesaria para poder usar Vue y las rutas además de mdi font, en este fichero agregamos lo siguiente.</p>
+
+                        <pre><span>import { createApp } from 'vue/dist/vue.esm-bundler';<br></span>import App from './web/App.vue';<br>import RouterWeb from './router/index'<br>import '@mdi/font/css/materialdesignicons.css'<br>import NavbarComponent from "@/Componentes/Navbar.vue";<br><span><br>const app = createApp(App);<br></span><br><span>app.use(RouterWeb);<br></span>app.component('Navbar', NavbarComponent);<br>app.mount('#app');</pre>
+
+                        <h2>Paso 11: modificar el archivo welcome.blade.php de Laravel</h2>
+
+                        <p>Este archivo es el punto de entrada de nuestro proyecto Laravel en el cual tenemos que agregar Vite y vue, quedando de la siguiente manera:</p>
+
+                        <pre>&lt;!DOCTYPE html&gt;<br>&lt;html lang="{{ str_replace('_', '-', app()-&gt;getLocale()) }}"&gt;<br>&nbsp; &nbsp; &lt;head&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;meta charset="utf-8"&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;title&gt;Laravel&lt;/title&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- Fonts --&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @vite('resources/css/app.css')<br>&nbsp; &nbsp; &lt;/head&gt;<br>&nbsp; &nbsp; &lt;body&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &lt;div id="app"&gt;&lt;/div&gt;<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;@vite('resources/js/app.js')<br>&nbsp; &nbsp; &lt;/body&gt;<br>&lt;/html&gt;</pre>
+
+                        <p>Y es todo, ahora solamente nos queda iniciar el server si no lo hemos iniciado con npm run serve y listo ya tenemos configurado nuestro proyecto Laravel + Vue 3 + Vite.</p>
+                    </section>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    </body>
+</html>

@@ -1,5 +1,7 @@
 # Como instalar y Configurar | Vue 3 Router | Laravel 9 | Vite
 
+[Versión web](http://josetello.co.pe/laravel-vue-installation)
+
 ![Laravel Vue](./img/laravel-vue.jpg)
 
 ## Configura Laravel 9 con Vue Router y vite en este articulo.
